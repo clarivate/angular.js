@@ -525,7 +525,6 @@ module.exports = function(grunt) {
     'minall',
     'collect-errors',
     'write',
-    'docs',
     'copy:i18n',
     'compress:build'
   ]);

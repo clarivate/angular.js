@@ -1,5 +1,10 @@
 {
-  "name": "angular",
+  "name": "@slargemain/angularjs",
+  "version": "1.7.8",
+  "main": "build/angular.js",
+  "files": [
+    "build/"
+  ],
   "license": "MIT",
   "branchVersion": "^1.7.0",
   "branchPattern": "1.7.*",
