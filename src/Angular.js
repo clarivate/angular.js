@@ -1335,8 +1335,16 @@ function toJson(obj, pretty) {
  */
 function fromJson(json) {
   return isString(json)
-      ? JSON.parse(json)
-      : json;
+    ? JSON.parse(json, function reviver(key, value) {
+      if (angular.isObject(value)) {
+        if (value.$type === 'DateTime') {
+          return value.$value === null ? '' : new Date(value.$value);
+        } else if (value.$type === 'LookupField') {
+          return value.$value;
+        }
+      }
+      return value;
+    }) : json;
 }
 
 

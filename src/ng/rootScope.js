@@ -102,6 +102,8 @@ function $RootScopeProvider() {
 
     function destroyChildScope($event) {
         $event.currentScope.$$destroyed = true;
+
+        $event.currentScope.$destroy();
     }
 
     function cleanUpScope($scope) {
@@ -1022,6 +1024,20 @@ function $RootScopeProvider() {
         if (this.$$destroyed) return;
         var parent = this.$parent;
 
+        // clean children
+        var child = this.$$childHead;
+        var curentChild;
+        if (child) {
+          do {
+            curentChild = child;
+            child = child.$$nextSibling;
+            if (curentChild) {
+              curentChild.$destroy();
+            }
+          } while (child);
+          curentChild = null;
+        }
+
         this.$broadcast('$destroy');
         this.$$destroyed = true;
 
@@ -1049,6 +1065,14 @@ function $RootScopeProvider() {
 
         // Disconnect the next sibling to prevent `cleanUpScope` destroying those too
         this.$$nextSibling = null;
+
+        // clean watchers
+        if (this.$$watchers) {
+          for (var i = 0; i < this.$$watchers.length; i++) {
+            this.$$watchers[i] = null;
+          }
+        }
+
         cleanUpScope(this);
       },
 
