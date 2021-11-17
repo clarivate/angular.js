@@ -1,5 +1,5 @@
 {
-  "name": "@slargemain/angularjs",
+  "name": "@clarivate/angularjs",
   "version": "1.7.8",
   "main": "build/angular.js",
   "files": [
